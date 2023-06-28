@@ -11,11 +11,35 @@ import javax.swing.*;
 
 public class PruebaDibujo {
 
+    public static boolean ExisteFuente(String nombre) {
+        String[] fuentes = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        for (String fuente : fuentes) {
+            if (nombre.equals(fuente)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         //creamos la ventana grafica
-        MarcoConDibujos miMarco = new MarcoConDibujos();
-        miMarco.setVisible(true);
-        miMarco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        MarcoConDibujos miMarco = new MarcoConDibujos();
+//        miMarco.setVisible(true);
+//        miMarco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        try {
+//            String text = JOptionPane.showInputDialog("Introduce fuente");
+//
+//            if (!ExisteFuente(text)) {
+//                throw new Exception("No existe la fuente especificada");
+//            }
+
+            MarcoConDibujos miMarco = new MarcoConDibujos();
+            miMarco.setVisible(true);
+            miMarco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
@@ -36,8 +60,11 @@ class MarcoConDibujos extends JFrame {
         LaminaConFiguras lamina1 = new LaminaConFiguras();
 
         //añadimos la lamina a la ventana
-        add(lamina1);
-        lamina1.setBackground(SystemColor.window);
+//        add(lamina1);
+//        lamina1.setBackground(SystemColor.window);
+        //añadimos lamina 2
+        LaminaConFuente lamina2 = new LaminaConFuente();
+        add(lamina2);
     }
 }
 
@@ -72,7 +99,23 @@ class LaminaConFiguras extends JPanel {
         elips.setFrame(rect);
 //        g2.setPaint(Color.RED);
 //        g2.draw(elips);
-        g2.setPaint(new Color(109,172,59).brighter());
+        g2.setPaint(new Color(109, 172, 59).brighter());
         g2.fill(elips);
+    }
+}
+
+class LaminaConFuente extends JPanel {
+
+    //estamos sobreescribiendo el metodo original, por eso llamamos a su clase super para que tambn haga lo que tiene por defecto programado
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+        Font miFuente = new Font("Verdana", Font.PLAIN, 26);
+        
+        g2.setFont(miFuente);
+        g2.setColor(Color.ORANGE);
+        
+        g2.drawString("Pedro Gabriel Gallardo Lozano", 100, 100);
     }
 }
